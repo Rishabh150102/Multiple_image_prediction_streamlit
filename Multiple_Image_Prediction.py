@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import numpy as np
-import tensorflow as tf
+from tensorflow.keras.models import load_model
 import plotly.express as px
 import requests
 from pydrive.auth import GoogleAuth
@@ -94,7 +94,7 @@ file = [f for f in file_list if f['title'] == 'resnet50_30epoch_multiclass.h5'][
 file.GetContentFile('resnet50_30epoch_multiclass.h5')  # Replaces with your file name
 
 # Load the model
-model = tf.keras.models.load_model('model.h5')
+model = load_model('model.h5')
 
 # model = tf.keras.models.load_model('C:\\Users\\risha\\Downloads\\resnet50_30epoch_multiclass.h5') 
 # for github
