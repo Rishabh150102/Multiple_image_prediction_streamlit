@@ -32,7 +32,6 @@ httplib2
 idna
 imutils
 Jinja2
-jobli
 jsonschema
 jsonschema-specifications
 keras
