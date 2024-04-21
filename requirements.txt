@@ -2,6 +2,7 @@ absl-py
 altair
 astunparse
 attrs
+bata3
 blinker
 cachetools
 cattrs
