@@ -4,8 +4,9 @@ import numpy as np
 from tensorflow.keras.models import load_model
 import plotly.express as px
 import requests
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
+import os
+import boto3 
+import tensorflow as tf
 
 
 
@@ -81,20 +82,21 @@ with st.container(border=True):
 # Code for Analysis of images starts (MAIN)
 
 
-# Authentication
-gauth = GoogleAuth()
-gauth.LoadCredentialsFile("mycreds.txt")  # Customizable path 
-drive = GoogleDrive(gauth)
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
-# Find your file 
-file_list = drive.ListFile({'q': "'root' in parents and trashed=false"}).GetList()
-file = [f for f in file_list if f['title'] == 'resnet50_30epoch_multiclass.h5'][0] 
+# S3 bucket and model file
+bucket_name = 'my-streamlit-model-bucket'  # Replace with your actual bucket name
+model_key = 'resnet50_30epoch_multiclass.h5'
 
-# Download the model
-file.GetContentFile('resnet50_30epoch_multiclass.h5')  # Replaces with your file name
+def load_model():
+    s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, 
+                          aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+    s3.download_file(bucket_name, model_key, 'model.h5')
+    return tf.keras.models.load_model('model.h5')
 
 # Load the model
-model = load_model('model.h5')
+model = load_model()
 
 # model = tf.keras.models.load_model('C:\\Users\\risha\\Downloads\\resnet50_30epoch_multiclass.h5') 
 # for github
