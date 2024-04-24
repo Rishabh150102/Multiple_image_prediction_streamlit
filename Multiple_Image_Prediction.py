@@ -138,16 +138,16 @@ if uploaded_files:
 
         
         prediction = model.predict(image_array)
-        st.write(prediction)
+        # st.write(prediction)
         predictions.append(prediction[0][0])
 
         #Display the image
-        st.image(image)
+        # st.image(image)
 
-        if prediction[0][0] >= 0.5:
-            st.write('Healthy')
-        else:
-            st.write('Unhealthy')
+        # if prediction[0][0] >= 0.5:
+        #     st.write('Healthy')
+        # else:
+        #     st.write('Unhealthy')
 
 
     # Calculate percentages of healthy and unhealthy predictions
